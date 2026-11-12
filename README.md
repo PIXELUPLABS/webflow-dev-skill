@@ -118,7 +118,7 @@ python3 reo-dev-v2-build/scripts/lint_v2_names.py --names "v2-button is-secondar
 
 ## Status
 
-As of 2026-11-12 nothing has been built in the live project. The audits behind this skill (the Webflow project and the Figma home page section `1:285`) were read-only. Open decisions for the project lead are listed in the [build log](reo-dev/v2-build-log.md): seven workflow questions and sixteen home page design questions, each with the default that will be built until answered.
+As of 2026-11-12 nothing has been built in the live project. The audits behind this skill (the Webflow project and the Figma home page section `1:285`) were read-only. Open decisions for the project lead are listed in the [build log](reo-dev/v2-build-log.md): six workflow questions and sixteen home page design questions, each with the default that will be built until answered.
 
 ## Keeping it current
 
