@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reo.dev V2 Build"
+  short_description: "Build the new Reo.dev inside the live Webflow project, safely namespaced"
+  default_prompt: "Use $reo-dev-v2-build to build this Reo.dev page or component in the live Webflow project."
+policy:
+  allow_implicit_invocation: true
