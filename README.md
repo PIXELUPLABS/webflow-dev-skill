@@ -20,20 +20,31 @@ reo.dev is live in this Webflow project and is being redesigned in batches. Buil
 - **Launch is a slug swap**, run by the lead, one batch at a time.
 - **Cleanup at the end** deletes the legacy build and strips the `v2-` marker mechanically.
 
+## Start here
+
+**If you are the developer:** read [`developer-playbook.md`](reo-dev-v2-build/references/developer-playbook.md) (setup, the daily loop, prompts to paste, which permission prompts to allow or refuse), then work through [`home-build-plan.md`](reo-dev-v2-build/references/home-build-plan.md) one task card per Claude session, starting at T00.
+
+**If you are reviewing:** read [`review-guide.md`](reo-dev-v2-build/references/review-guide.md). Each session leaves a report in [`reo-dev/reports/`](reo-dev/reports/) and updates the [build log](reo-dev/v2-build-log.md); design questions waiting on you are listed there with the default being built.
+
 ## What is in the skill
 
 | File | What it covers |
 |---|---|
-| [`SKILL.md`](reo-dev-v2-build/SKILL.md) | Hard rules, session start, build workflow, verification checklist |
+| [`SKILL.md`](reo-dev-v2-build/SKILL.md) | Hard rules, session start and end, build workflow, verification checklist |
+| [`references/home-page-blueprint.md`](reo-dev-v2-build/references/home-page-blueprint.md) | The home page, pre-read from Figma: node ids per breakpoint, class tree, copy, assets and responsive behaviour for every section, plus 16 open design questions with defaults |
+| [`references/home-build-plan.md`](reo-dev-v2-build/references/home-build-plan.md) | Task cards T00–T20: prompt to paste, what the developer checks, done criteria, what the lead looks at |
+| [`references/developer-playbook.md`](reo-dev-v2-build/references/developer-playbook.md) | How to run sessions with Claude: daily loop, prompts, allow / refuse table, common problems |
+| [`references/review-guide.md`](reo-dev-v2-build/references/review-guide.md) | The lead's 15-minute daily review, red flags, review-build checklist |
 | [`references/naming.md`](reo-dev-v2-build/references/naming.md) | The full naming system: classes, combos, variables, components, pages, assets, interactions |
 | [`references/legacy-inventory.md`](reo-dev-v2-build/references/legacy-inventory.md) | Audit of the live project (2026-11-12): pages and ids, components, variables, CMS collections, site code, and what a new page inherits |
 | [`references/v2-foundation.md`](reo-dev-v2-build/references/v2-foundation.md) | Phase 0: fonts, tokens, global classes, page shell, global embed |
 | [`references/pages-and-launch.md`](reo-dev-v2-build/references/pages-and-launch.md) | Creating pages, linking rules, CMS templates, review builds, launch runbook, rollback |
 | [`references/cleanup-runbook.md`](reo-dev-v2-build/references/cleanup-runbook.md) | End-of-project removal of the legacy build and the rename |
 | [`references/mcp-gotchas.md`](reo-dev-v2-build/references/mcp-gotchas.md) | Webflow MCP behaviours that cause mistakes |
-| [`scripts/lint_v2_names.py`](reo-dev-v2-build/scripts/lint_v2_names.py) | Checks class names against the rules and against a snapshot of every legacy style |
+| [`scripts/lint_v2_names.py`](reo-dev-v2-build/scripts/lint_v2_names.py) | Checks class names against the rules and against a snapshot of every legacy style; `--list` prints every V2 class by folder |
 | `scripts/woff2info.mjs`, `scripts/upload_font.py` | Font inspection and upload helpers |
 | `assets/legacy-style-baseline.json` | Ids of all 3,494 legacy styles, used by the linter |
+| `assets/session-report-template.md`, `assets/build-log-template.md` | The report Claude writes after every session, and the project log |
 
 ## Setup
 
@@ -107,7 +118,7 @@ python3 reo-dev-v2-build/scripts/lint_v2_names.py --names "v2-button is-secondar
 
 ## Status
 
-As of 2026-11-12 nothing has been built in the live project. The audit behind this skill was read-only. Open decisions for the project lead are listed at the bottom of the [build log](reo-dev/v2-build-log.md).
+As of 2026-11-12 nothing has been built in the live project. The audits behind this skill (the Webflow project and the Figma home page section `1:285`) were read-only. Open decisions for the project lead are listed in the [build log](reo-dev/v2-build-log.md): seven workflow questions and sixteen home page design questions, each with the default that will be built until answered.
 
 ## Keeping it current
 

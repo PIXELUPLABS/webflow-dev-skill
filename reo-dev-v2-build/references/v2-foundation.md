@@ -4,6 +4,8 @@ The design system for the new Reo.dev, mapped from the Figma file `GuQCrycX2KDwe
 
 **Status on 2026-11-12: nothing in this file exists in the live project yet.** These values were first built and checked on a separate Client-First V3 prototype site that the current Webflow connection cannot reach. Phase 0 recreates them here, in the `V2` namespace. Any variable or font id from that prototype (for example in `reo-dev/reference/variables.md`) is **invalid on this site**: always take ids from the tool that created the thing.
 
+The values the home page uses were re-checked against the Figma variables of that section on 2026-11-12 and match: brand blue, beige, the black and white alpha steps, H1, H2, H6, body, label, tag, mono, stat and large-text styles, and the padding, section and gap rhythm at all three breakpoints. Values the home page does not show (hover and pressed blues, blue-100, H3–H5, the gutter token) come from the prototype and could not be re-checked from this section. The Figma file also carries a few near-duplicate values (noted where they matter), and the status colours listed as "Others" are not used on the home page.
+
 Once Phase 0 is done, Webflow is the source of truth. Confirm a value with `data_variable_tool` / `query_styles` before relying on this file, and record deliberate changes in the build log.
 
 ## How the system works
@@ -82,11 +84,11 @@ Writing values: to write the base mode, **omit `mode_id`** (passing `"base"` fai
 | Neutral/neutral-100 | `#f3f3f1` | page beige, surface/muted |
 | Neutral/neutral-300 | `#d9d9d6` | action/disabled |
 | Neutral/neutral-600 | `#616160` | |
-| Neutral/neutral-900 | `#313131` | border/raised-inverse |
-| Neutral/neutral-950 | `#171717` | surface/raised-inverse |
+| Neutral/neutral-900 | `#313131` | border/raised-inverse. The Figma `Reo/Trust Card` component uses `#343330`; treat as the same token |
+| Neutral/neutral-950 | `#171717` | surface/raised-inverse. The Figma `Reo/Trust Card` component uses `#18181b`; treat as the same token |
 | Black Alpha/black-80, -60, -55, -43, -20, -10 | `rgba(0,0,0,0.80)` … `0.10` | text primary, body, secondary, tertiary; border strong, subtle |
 | White Alpha/white-80, -74, -20, -10 | `rgba(255,255,255,0.80)` … `0.10` | inverse body, inverse secondary; inverse borders |
-| Others/green, yellow, red (`-light`, `-dark`) | take from Figma `strength/*` | success, warning, error. Read the hex from Figma; do not guess |
+| Others/green, yellow, red (`-light`, `-dark`) | not needed for the home page | success, warning, error. Create them only when a page first needs them, reading the hex from that page's Figma node; do not guess. The only green on the home page is `#05773b`, inside exported testimonial art. |
 | Font Family/heading, body, accent, mono | stacks above | |
 | Font Weight/normal, medium, semi-bold | 400, 500, 600 | |
 | Letter Spacing/tightest, tighter, default, wide, wider, widest | −0.04em, −0.02em, 0, 0.01em, 0.03em, 0.04em | |
@@ -188,6 +190,9 @@ The Figma 6px and 40px spaces have no token. Use a Layout token or a local value
 | `v2-padding-section-large` (`-medium`, `-small`) | `padding-top` / `padding-bottom`: Section Padding/* |
 | `v2-theme-dark` | `background-color: Background/primary` · `color: Text/primary` · Theme mode → Dark Mode (`set_style_variable_mode`, no breakpoint) |
 | `v2-theme-brand` | same, Theme mode → Brand Mode |
+| `v2-theme-light` | `background-color: Background/secondary` · `color: Text/primary` · Theme mode → **base (light)**. For a light card inside a blue or black section (the testimonial card). |
+
+**Check `v2-theme-light` when you create it.** Setting a nested element back to the base mode has not been tested on this project. Build a small test: a `v2-theme-light` block with a `v2-text-color-primary` text inside a `v2-theme-brand` block; the text must be dark. If the base mode cannot be selected with `set_style_variable_mode`, add a third mode `Light Mode` to `V2 Theme` with the same values as base, point `v2-theme-light` at it, and record that in the build log.
 
 `v2-page-wrapper` exists to override the legacy `body` tag style, which sets a different background, font, color and size on every page of this project. Do not rely on anything inheriting from `body`.
 
@@ -240,12 +245,15 @@ The tiny text inside product mockups (6–14px) is illustration. Export mockups 
 | `v2-eyebrow` + `v2-text-style-mono` | Reo/Eyebrow | padding 1/8, min-height 24px, 0.5px hairline; `is-inverse` on dark or blue |
 | `v2-stat` + `v2-text-style-stat` + `v2-text-style-label-caps` | Reo/Stat | column, 8px gap |
 | `v2-icon-1x1-small` / `-medium` / `-large` | | 16 / 20 / 40px squares; inline SVG with `fill="currentColor"` |
+| `v2-icon-button` | Reo/Icon Button | 40 × 40, centred icon, background `Background/secondary`, 1px `Border/primary`; hover brand border. Used for the nav menu button |
+| `v2-button-group` | | flex, wrap, gap 12, align center |
+| `v2-section-header_component` | Reo/Section Header | flex column, align and text center, gap `Spacing/small` (24). Holds an optional `v2-eyebrow` and an `h2.v2-heading-style-h2` |
 
 Every link-type class here (`v2-button`, `v2-link-button`, navbar and footer links) must define its own `:hover` color and `text-decoration`, even when hover looks the same as rest. The legacy `a:hover` tag style is neutralised by the global embed with a selector that outranks a plain class but not a class with `:hover`.
 
-Figma's component library ("↳ Components", `140:4753`) also has Nav Bar, Tab, Feature Card, Section Header, Category Cell, Logo Cell, Integration Card, Trust Card, CTA Banner, Footer, Browser Bar and Product Demo Media. Build Nav Bar, Footer and CTA Banner as Webflow components (Phase 1).
+Figma's component library ("↳ Components", `140:4753`, outside the home page section) also has Nav Bar, Tab, Feature Card, Section Header, Category Cell, Logo Cell, Integration Card, Trust Card, CTA Banner, Footer, Browser Bar and Product Demo Media. How each one maps to V2 classes and Webflow components on the home page is in `home-page-blueprint.md`.
 
-**Section dividers** (`87:3145`, 16 variants of base color × stripe color × edge × flip; 96 / 72 / 48px tall) are vector art: export as SVG, do not rebuild. Keep `width` and `height` attributes on SVGs used as CSS backgrounds.
+**Section dividers** (`87:3145`; 96 / 72 / 48px tall) are vector art: export as SVG, do not rebuild. The six used on the home page, their node ids and asset names are in `home-page-blueprint.md`. Keep `width` and `height` attributes on SVGs.
 
 **Disabled states.** Links cannot be `:disabled`. Add disabled styles only where a real `<button>` is used (forms).
 
@@ -320,8 +328,6 @@ section.v2-section_[name]            (+ v2-theme-dark / v2-theme-brand)
             └─ …                        cards and grids with custom classes bound to semantic variables
 ```
 
-- Eyebrow-to-heading gap: 24px (`v2-margin-bottom-small`). Header-to-content gap: `Layout/section-gap`.
+- Section header: the `v2-section-header_component` pattern (eyebrow, then the two-font H2, 24px apart). Header-to-content gap: `Layout/section-gap`.
 - Cards use semantic variables. Integration card: Background/primary + Border/secondary; hover Background/secondary + Border/brand. Trust card on dark: Background/raised + Border/raised.
-- Section backgrounds in the landing page: Hero beige (default) · Trusted By blue (`v2-theme-brand`) · Product Demo white (`v2-background-color-secondary`) · The Problem white · Testimonial blue · Take Reo Anywhere beige · Trust & Compliance black (`v2-theme-dark`) · CTA blue · Footer black.
-
-Landing page Figma nodes (desktop): Hero `191:12340` · Trusted By `1:408` · Product Demo `1:763` · The Problem `1:818` · Testimonial `1:2354` · Take Reo Anywhere `1:2740` · Trust & Compliance `1:2817` · CTA + Footer `1:3106`. Mobile hero has several options (`638:447`–`638:552`, `633:447`): ask the lead which one before building it.
+- Section backgrounds, node ids for all three breakpoints, class trees, copy and assets for the home page are in `home-page-blueprint.md`. Do not rely on older notes about section colours: the Figma file changed, and its tablet and mobile frames disagree with desktop (the blueprint says which wins).

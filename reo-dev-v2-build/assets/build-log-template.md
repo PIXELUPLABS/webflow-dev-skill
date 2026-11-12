@@ -4,6 +4,8 @@ Working record of the V2 build inside the live Reo.Dev Webflow project (`67e6b65
 
 **Last updated:** YYYY-MM-DD by …
 
+Session reports live in `reo-dev/reports/`, one file per task: `YYYY-MM-DD-[task].md` (template: `assets/session-report-template.md`).
+
 ## Status
 
 | Phase | State | Notes |
@@ -13,6 +15,13 @@ Working record of the V2 build inside the live Reo.Dev Webflow project (`67e6b65
 | 2. Pages | not started | |
 | 3. Launch batches | none | |
 | 4. Cleanup | not started | |
+
+## Task cards
+
+Copy the card list from `references/home-build-plan.md` (or the plan for the page in progress).
+
+| Card | Task | State | Report | Lead review |
+|---|---|---|---|---|
 
 ## Ids created in Phase 0
 
@@ -72,6 +81,13 @@ Pseudo-elements, runtime-state CSS in embeds, anything a designer cannot see by 
 
 | Question | Asked | Answer |
 |---|---|---|
+
+## Design questions
+
+Numbered as in the page's blueprint. The default is what gets built until the lead answers.
+
+| # | Question | Default being built | Answer |
+|---|---|---|---|
 
 ## Deviations and incidents
 

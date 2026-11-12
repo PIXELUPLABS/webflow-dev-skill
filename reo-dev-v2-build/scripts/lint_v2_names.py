@@ -21,6 +21,7 @@ Two uses:
 
      A quoted group is one element's class list: first the base, then combos.
 
+  --list           also print every v2 class grouped by folder (for the daily review).
   --post-cleanup   after the cleanup runbook: no v2- names may remain.
 
 Exit code 0 = clean, 1 = violations, 2 = usage error.
@@ -96,7 +97,7 @@ def base_of(style):
     return m.group(1) if m else None
 
 
-def lint_dump(path, baseline_path, post_cleanup):
+def lint_dump(path, baseline_path, post_cleanup, show_list=False):
     with open(path, encoding="utf-8") as fh:
         raw = fh.read()
     try:
@@ -118,6 +119,7 @@ def lint_dump(path, baseline_path, post_cleanup):
         print("warning: baseline not found, every non-v2 class will be listed as unknown", file=sys.stderr)
 
     violations, unknown, v2_count, legacy_missing = [], [], 0, 0
+    v2_bases, v2_combos = set(), {}
     seen = set()
     for s in styles:
         sid, name = s["id"], s["name"]
@@ -141,6 +143,7 @@ def lint_dump(path, baseline_path, post_cleanup):
             base = base_of(s)
             if base and base.startswith("v2-"):
                 v2_count += 1
+                v2_combos.setdefault(base, set()).add(name)
                 for p in check_combo(name):
                     violations.append((s.get("selector") or name, p))
             else:
@@ -148,6 +151,7 @@ def lint_dump(path, baseline_path, post_cleanup):
             continue
         if name.startswith("v2-"):
             v2_count += 1
+            v2_bases.add(name)
             for p in check_base(name):
                 violations.append((name, p))
         else:
@@ -172,6 +176,21 @@ def lint_dump(path, baseline_path, post_cleanup):
             print("  %-48s %s" % (name, why))
     if not violations and not unknown:
         print("\nOK: no naming violations.")
+    if show_list and not post_cleanup:
+        folders = {}
+        for name in v2_bases:
+            tail = name[3:]
+            folder = tail.split("_")[0] if "_" in tail else "(global utilities and components)"
+            folders.setdefault(folder, []).append(name)
+        print("\nV2 CLASSES BY FOLDER (%d classes, %d folders):" % (len(v2_bases), len(folders)))
+        for folder in sorted(folders, key=lambda f: (f.startswith("("), f)):
+            print("  %s  [%d]" % (folder, len(folders[folder])))
+            for name in sorted(folders[folder]):
+                combos = sorted(v2_combos.get(name, []))
+                print("    %s%s" % (name, ("   + " + ", ".join(combos)) if combos else ""))
+        orphans = sorted(b for b in v2_combos if b not in v2_bases)
+        if orphans:
+            print("  combos whose base class is missing from the dump: %s" % ", ".join(orphans))
     return 1 if (violations or unknown) else 0
 
 
@@ -206,13 +225,14 @@ def main():
     ap.add_argument("--baseline", default=os.path.join(here, "..", "assets", "legacy-style-baseline.json"))
     ap.add_argument("--names", nargs="+", help="class names or quoted class lists to check")
     ap.add_argument("--post-cleanup", action="store_true")
+    ap.add_argument("--list", action="store_true", help="print every v2 class grouped by folder")
     args = ap.parse_args()
     if args.names:
         return lint_names(args.names)
     if not args.dump:
         ap.print_usage(sys.stderr)
         return 2
-    return lint_dump(args.dump, args.baseline, args.post_cleanup)
+    return lint_dump(args.dump, args.baseline, args.post_cleanup, args.list)
 
 
 if __name__ == "__main__":

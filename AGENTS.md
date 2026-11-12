@@ -6,6 +6,9 @@ This repository exists for one job: building the redesigned Reo.dev website insi
 
 1. Load and follow `reo-dev-v2-build/SKILL.md`. Read the reference file it points to for the task; do not work from memory of it.
 2. Read `reo-dev/v2-build-log.md` for the current phase, ids and open questions. Update it at the end of the session.
+3. Work one task card at a time from `reo-dev-v2-build/references/home-build-plan.md`. End every session that wrote to Webflow with a report in `reo-dev/reports/` (template: `reo-dev-v2-build/assets/session-report-template.md`).
+
+The developer is new to Webflow and the lead reviews from your reports, so check your own work, say what you will do before you write, and never invent content or features.
 
 ## Rules that always apply
 

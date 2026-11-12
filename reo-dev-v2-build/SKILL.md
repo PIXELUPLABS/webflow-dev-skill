@@ -36,10 +36,25 @@ Read the one that matches the task. Do not work from memory of them.
 | [references/legacy-inventory.md](references/legacy-inventory.md) | Before touching a page that has a legacy equivalent, and whenever you need to know what already exists (IDs, components, tag styles, site code, CMS) |
 | [references/v2-foundation.md](references/v2-foundation.md) | Phase 0 (variables, fonts, global classes, page shell, global embed) and whenever you need a token or a global class |
 | [references/pages-and-launch.md](references/pages-and-launch.md) | Creating a page, linking between pages, CMS template work, preparing or running a batch launch |
+| [references/home-page-blueprint.md](references/home-page-blueprint.md) | Building anything on the home page: section-by-section class trees, copy, assets, breakpoint behaviour, open design questions with defaults |
+| [references/home-build-plan.md](references/home-build-plan.md) | Choosing or running a task: ordered task cards (T00–T20) with prompts, checks and done criteria |
+| [references/developer-playbook.md](references/developer-playbook.md) | How a session runs: the daily loop, prompts, which permission prompts to allow or refuse, common problems |
+| [references/review-guide.md](references/review-guide.md) | Reviewing work (the lead's daily routine), or when asked to run in review mode |
 | [references/cleanup-runbook.md](references/cleanup-runbook.md) | Only at the very end of the project, on the lead's instruction |
 | [references/mcp-gotchas.md](references/mcp-gotchas.md) | Before your first write in a session, and when a tool behaves oddly |
 
-Tools: `scripts/lint_v2_names.py` (name and baseline check), `scripts/woff2info.mjs` and `scripts/upload_font.py` (font upload), `assets/legacy-style-baseline.json` (every legacy style id, snapshot 2026-11-12), `assets/build-log-template.md`.
+Tools: `scripts/lint_v2_names.py` (name and baseline check; `--list` prints every V2 class by folder), `scripts/woff2info.mjs` and `scripts/upload_font.py` (font upload), `assets/legacy-style-baseline.json` (every legacy style id, snapshot 2026-11-12), `assets/build-log-template.md`, `assets/session-report-template.md`.
+
+## Who you are working with
+
+The developer running you is new to Webflow and relies on you for almost all of the build. The lead reviews the work once a day from your written reports, not from the conversation. That changes how you work:
+
+- **Do not rely on the developer to catch mistakes.** Check your own work against Figma and against this skill before you say anything is done.
+- **Say what you are about to do before you write to Webflow**, in plain language, so the developer can stop you.
+- **Explain in one or two sentences why**, when you refuse something or take a default. The developer is learning from you.
+- **Never guess silently.** If the design is ambiguous, take the documented default (or ask), and write it down.
+- **Do not invent content or features.** No made-up quotes, statistics, links, logos, animations or sticky behaviour. Placeholders are marked as placeholders.
+- **Leave a trail.** Every session ends with a report the lead can verify without you.
 
 ## Hard rules
 
@@ -80,7 +95,23 @@ Do these in order, every session, before any write.
 2. Read `references/mcp-gotchas.md`, then the project build log (`reo-dev/v2-build-log.md` in the workspace; create it from `assets/build-log-template.md` if it is missing). The log tells you which phase is done and what is half-finished.
 3. Confirm the site: `data_sites_tool` → `get_site` for `67e6b65ee328bc6b91324c9a`. If it is not reachable, stop: say the Webflow MCP is not authorised for this workspace. Do not continue on another site.
 4. Check the foundation: `data_variable_tool` → `get_variable_collections`. If there is no `V2 Base` collection, the foundation is not built, and Phase 0 comes first. If only some V2 collections exist, a previous Phase 0 run was interrupted: finish it rather than starting over.
-5. Confirm the task and its Figma node with the lead if either is unclear. One question, then proceed.
+5. Identify the task card (`references/home-build-plan.md`) and its Figma nodes. One card per session. If the request does not match a card or is unclear, ask one question, then proceed.
+6. Tell the developer, in a few lines, what you will create and where, before the first write.
+
+## Session end
+
+Do these every session that wrote anything, before you say you are finished.
+
+1. Run the verification list below.
+2. Write a session report to `reo-dev/reports/YYYY-MM-DD-[task].md` from `assets/session-report-template.md`. Fill every section; "None" is an answer, an empty section is not.
+3. Update `reo-dev/v2-build-log.md`: status table, ids, pages, components, ledger, open questions.
+4. Tell the developer what to check by eye (the card's "You check" list) and any manual Designer step you could not do.
+
+If the session is cut short, write the report anyway with status "Partly done" and exactly where you stopped.
+
+## Review mode
+
+When asked to review, audit or "check for drift": read `references/review-guide.md`, run the checks, and **report only**. Make no writes unless the lead then asks for a specific fix.
 
 ## Build workflow
 
@@ -90,9 +121,11 @@ Follow `references/v2-foundation.md` end to end: fonts, the five `V2 …` variab
 
 ### Phase 1: shared components
 
-Build once, as Webflow components in the `V2 Global` group: `V2 Navbar`, `V2 Footer`, `V2 CTA Banner`, `V2 Section Divider`, `V2 Cookie Banner`. They are on every V2 page, so they come before page work. The legacy consent banner is a page-level block (not a component) that every legacy page carries; a V2 page without `V2 Cookie Banner` has **no consent UI**, and Consent Pro then never unblocks the analytics scripts. See `legacy-inventory.md`.
+Build once, as Webflow components in the `V2 Global` group: `V2 Navbar`, `V2 Footer`, `V2 CTA Banner`, `V2 Section Divider`, `V2 Cookie Banner`. They are on every V2 page, so they come before page work. Their specs are in `home-page-blueprint.md`. The cookie banner has no V2 design yet: it is blocked on the lead, and no review build goes out without it. The legacy consent banner is a page-level block (not a component) that every legacy page carries; a V2 page without `V2 Cookie Banner` has **no consent UI**, and Consent Pro then never unblocks the analytics scripts. See `legacy-inventory.md`.
 
 ### Phase 2: pages, one at a time
+
+The home page is fully planned: follow `home-build-plan.md` card by card and `home-page-blueprint.md` section by section. For a page with no blueprint yet, write one first (sections, class trees, copy, assets, open questions with defaults, in the same shape as the home blueprint), have the lead skim it, then build.
 
 For each page:
 
@@ -126,7 +159,9 @@ Lead-run. `pages-and-launch.md` has the slug-swap runbook; `cleanup-runbook.md` 
 - **Responsive:** each section checked at Desktop, Tablet, Mobile L and Mobile. Snapshot small blocks, not whole sections; snapshots are not a browser, so judge fonts, hairlines and embeds on the staging URL once the lead publishes a review build.
 - **Page state:** still draft (unless the lead asked otherwise), `get_page_sitemap_status` shows `includeInSitemap: false`, slug ends in `-v2`.
 - **Legacy untouched:** you made no write to a legacy page, style, variable or component. If you did, say so at once with the exact call; do not try to hide or silently revert it.
-- **Log:** the build log lists the page, new components, any class or variable named in custom code, and open questions.
+- **Figma:** compared with the node's screenshot at 1440, 768 and 390, section by section. List every difference you can see, including ones you chose not to fix.
+- **Content:** every string on the page is from Figma or the legacy page. Placeholders are labelled in the report.
+- **Log:** the build log lists the page, new components, any class or variable named in custom code, and open questions. The session report is written.
 
 Report what you verified and what you could not. "Built, not yet checked in a browser" is a valid status; "done" is not, until it has been.
 

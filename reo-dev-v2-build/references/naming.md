@@ -79,7 +79,7 @@ v2-trust_card            v2-trust_card-icon     v2-trust_card-title
 - The outermost custom element of a section is always `v2-[folder]_component`.
 - Describe role, not looks: `v2-pricing_card-highlight`, not `v2-pricing_blue-box`.
 - Use a hyphen for a sub-part (`v2-trust_card-icon`), never a second underscore.
-- A class used by two or more unrelated sections is not custom: promote it to a global component folder (`v2-card_…`, `v2-form_…`, `v2-slider_…`, `v2-tabs_…`, `v2-accordion_…`, `v2-modal_…`).
+- A class used by two or more unrelated sections is not custom: promote it to a global component folder (`v2-card_…`, `v2-form_…`, `v2-slider_…`, `v2-tabs_…`, `v2-accordion_…`, `v2-modal_…`, `v2-browser_…`, `v2-section-header_…`, `v2-divider_…`). A reusable card that is also a Webflow component gets its own folder named after the component: `V2 Feature Card` → `v2-feature-card_component`, `V2 Integration Card` → `v2-integration-card_component`.
 - Page-specific folders take the page name only when the section name alone would be ambiguous: `v2-pricing-faq_item` vs `v2-faq_item` (global).
 
 ### Section classes
