@@ -49,11 +49,11 @@ Exceptions drawn in Figma: Hero has its own paddings (below). On desktop, sectio
 
 ## Open design questions
 
-Things the Figma file does not settle. Each has a default so work is not blocked. All of them are listed in the build log for the lead.
+Things the Figma file does not settle. Each has a default so work is not blocked. All of them are listed in the build log for the lead. When the lead answers one, the row is rewritten as "Decided" with the date: a decided row is a rule, not a default.
 
 | # | Question | Default until answered |
 |---|---|---|
-| 1 | **Section backgrounds differ by breakpoint.** Desktop: Product Demo beige, The Problem white, Take Reo Anywhere beige. Tablet and mobile: Product Demo white, The Problem beige, Take Reo Anywhere white. | Use the **desktop** backgrounds at every breakpoint. The dividers are only properly drawn for desktop. |
+| 1 | **Section backgrounds differ by breakpoint.** Desktop: Product Demo beige, The Problem white, Take Reo Anywhere beige. Tablet and mobile: Product Demo white, The Problem beige, Take Reo Anywhere white. | **Decided by the lead, 2026-11-12: desktop wins.** Use the desktop backgrounds at every breakpoint (Product Demo beige, The Problem white, Take Reo Anywhere beige). Ignore the tablet and mobile section fills. |
 | 2 | **Dividers on tablet and mobile are placeholders**: every instance is the same variant with a recoloured fill. Tablet and mobile also add dividers before and after the CTA and omit the one under the hero. | Reuse the six desktop divider graphics at every breakpoint, at the token height. CTA keeps its own built-in stepped edges. |
 | 3 | **Three mobile sections exist twice** (Testimonial, Take Reo Anywhere, Trust & Compliance). | Use the loose, newer frames: `367:7733`, `634:3571` (carousel), `634:3743` (carousel). The Testimonial inside the mobile frame (`191:17563`) has broken copy and is clearly older. |
 | 4 | **Nav behaviour**: sticky, fixed, or static? Figma calls the variant "Floating" but shows only the top of the page. Dropdown panels (Intent Signals, GTM Plays) and the open mobile menu are not in this section. | Static at the top of the page, built so that switching to sticky is one property. Build dropdown toggles and the menu button; leave panels empty until the lead links the designs. |
@@ -292,7 +292,7 @@ Each **category is one column** on desktop and tablet and becomes its own block 
 
 ## 3. Product Demo: `v2-section_product-demo`
 
-Nodes `1:763` / `191:14358` / `191:17550`. Beige (question 1). No section header. Divider below.
+Nodes `1:763` / `191:14358` / `191:17550`. Beige at every breakpoint (decided, question 1). No section header. Divider below.
 
 ```text
 section.v2-section_product-demo
@@ -315,7 +315,7 @@ section.v2-section_product-demo
 
 ## 4. The Problem: `v2-section_problem`
 
-Nodes `1:818` / `191:14365` / `191:17557`. White: `v2-background-color-secondary` (question 1). Divider below.
+Nodes `1:818` / `191:14365` / `191:17557`. White at every breakpoint: `v2-background-color-secondary` (decided, question 1). Divider below.
 
 ```text
 section.v2-section_problem.v2-background-color-secondary
@@ -393,7 +393,7 @@ The active state is Webflow's `.w--current`, which the MCP cannot create: style 
 
 ## 6. Take Reo Anywhere: `v2-section_integrations`
 
-Nodes `1:2740` / `191:15844` / mobile `634:3571`. Beige (question 1). Divider below (beige → black).
+Nodes `1:2740` / `191:15844` / mobile `634:3571`. Beige at every breakpoint (decided, question 1). Divider below (beige → black).
 
 ```text
 section.v2-section_integrations

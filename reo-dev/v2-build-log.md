@@ -120,7 +120,7 @@ Numbers match "Open design questions" in the skill's `home-page-blueprint.md`. T
 
 | # | Question | Default being built | Answer |
 |---|---|---|---|
-| 1 | Product Demo, The Problem and Take Reo Anywhere have different backgrounds on desktop than on tablet and mobile. Which is right? | Desktop backgrounds everywhere (beige, white, beige) | |
+| 1 | Product Demo, The Problem and Take Reo Anywhere have different backgrounds on desktop than on tablet and mobile. Which is right? | Desktop backgrounds everywhere (beige, white, beige) |**Desktop wins** at every breakpoint (lead, 2026-11-12) |
 | 2 | Tablet and mobile dividers are placeholders, and add dividers around the CTA that desktop does not have. | Reuse the six desktop dividers at every breakpoint | |
 | 3 | Testimonial, Take Reo Anywhere and Trust & Compliance each have two mobile versions. | The newer loose frames (`367:7733`, `634:3571`, `634:3743`) | |
 | 4 | Nav: sticky, fixed or static? Where are the dropdown panels and the open mobile menu designed? | Static; empty dropdown panels | |
